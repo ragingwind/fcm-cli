@@ -8,10 +8,18 @@ const firebaseLogger = require('./lib/firebase-logger');
 
 const cli = meow(`
 	Usage
-	  $ fcm [command...] <configs...>
+	  $ fcm [command] <sources> <params> <configs...>
 
 	Commands
 		send                     send message through FCM
+
+	Sources/Params
+		.json                    path of json file which have configs.
+		                         params will be property name in the json
+		.env                     path of .env file which have configs
+		                         params will be prefix for replacing
+		<alias>                  name of alias for saving and loading
+		                         congigs from global
 
 	Firebase APIs Options, same as Firebase APIs, acccept any of notations.
 		--api-key                apiKey for Firebase APIs
