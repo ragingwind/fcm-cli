@@ -1,0 +1,46 @@
+{
+  "name": "fcm-cli",
+  "version": "0.0.0",
+  "description": "FCM(Firebase Cloud Messaging Client) for CLI",
+  "license": "MIT",
+  "repository": "ragingwind/fcm-cli",
+  "author": {
+    "name": "ragingwind",
+    "email": "ragingwind@gmail.com",
+    "url": "ragingwind.me"
+  },
+  "bin": {
+    "fcm": "cli.js"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "test": "xo"
+  },
+  "files": [
+    "cli.js",
+    "lib"
+  ],
+  "keywords": [
+    "cli-app",
+    "cli",
+    "firebase",
+    "fcm",
+    "fcm-cli",
+    "test"
+  ],
+  "dependencies": {
+    "camelcase": "^4.0.0",
+    "configstore": "^3.0.0",
+    "decamelize": "^1.2.0",
+    "dotenv": "^4.0.0",
+    "fcm-node": "^1.0.16",
+    "firebase": "^3.6.10",
+    "load-json-file": "^2.0.0",
+    "meow": "^3.7.0"
+  },
+  "devDependencies": {
+    "xo": "^0.17.0"
+  }
+}

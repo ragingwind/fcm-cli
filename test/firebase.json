@@ -1,0 +1,28 @@
+{
+	"configs": {
+		"apiKey": "Ssdasff21d123mWiLAg123IP4Cfawd12gsjk3qg4N-LADPTQtqD54TWdMzmZk",
+		"authDomain": "fcm-cli.firebaseapp.com",
+		"databaseURL": "https://fcm-cli.firebaseio.com",
+		"storageBucket": "fcm-cli.appspot.com",
+		"messagingSenderId": "1075172756221",
+		"serverKey": "Ssdasff21d123mWiLAg12asda3IP4CfawdN-LADPTQtqD54TWdMzmZk",
+		"to:": "Ssdasff21d123mWiLAg123IP4CfawdNasda-LADPTQtqD54TWdMzmZk",
+		"registrationIds": "registrationIds",
+		"condition": "condition",
+		"collapseKey": "collapseKey",
+		"priority": "priority",
+		"contentAvailable": "contentAvailable",
+		"mutableContent": "mutableContent",
+		"timeToLive": "timeToLive",
+		"restrictedPackageName": "restrictedPackageName",
+		"dryRun": "dryRun",
+		"data": {
+			"customTitle": "Hello",
+			"customBody": "Notification"
+		},
+		"notification": {
+			"title": "Hello",
+			"body": "Notification"
+		}
+	}
+}
