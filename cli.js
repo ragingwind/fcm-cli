@@ -12,6 +12,8 @@ const cli = meow(`
 
 	Commands
 		send                     send message through FCM
+		watch                    watch database url and send message
+		                         through FCM
 
 	Sources/Params
 		.json                    path of json file which have configs.
@@ -24,10 +26,10 @@ const cli = meow(`
 	Firebase APIs Options, same as Firebase APIs, acccept any of notations.
 		--api-key                apiKey for Firebase APIs
 		--server-key             serverKey for Firebase APIs
-		--messaging-sender-id    messagingSenderId for Firebase APIs
 		--to                     token for peers who want to receive FCM push
 		                         notification accept multiple options to send
 		                         multiple peers the message
+		--credential             path of Service Account credential file
 
 	Firebase Messaging Payload, dot expressions will be translated to JSON
 		--notification.title     {notification: {title: 'Title'}}
@@ -53,11 +55,13 @@ const cli = meow(`
 
 		# loading configs from .env file and strip out FIREBASE_ prefix in keys
 		$ fcm send .env FIREBASE_ --notification.title hi --notification.body message
+
+		# watch
+		$ fcm watch test1 --credential ./credential.json --database-url $DB_URL --api-key $API_KEY
 `);
 
 firebaseArgs(cli.input, cli.flags)
 	.then(firebaseRunner)
-	.then(firebaseLogger)
 	.catch(err => {
 		console.error(err);
 	});
