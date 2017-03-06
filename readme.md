@@ -11,8 +11,14 @@ $ yarn global add fcm-cli <or> npm install -g fcm-cli
 
 ## Help
 
+```sh
+$ fcm --help
 ```
-$ fcm-cli --help
+
+## Usase
+
+```sh
+$ fcm [command] <sources> <params> <configs...>
 ```
 
 ### Commands and Mandatory Configs
@@ -28,7 +34,41 @@ $ fcm-cli --help
 	- credential: We use firebase-admin which requires `Service Account Credential`. You can get the credential file from [Firebase Admin Setup](https://firebase.google.com/docs/admin/setup#add_firebase_to_your_app)
 	)
 
-## Why You should use this packages, What is benefits in terms of testing with FCM
+### Use Case
+
+```sh
+# sending FCM push message by passed configs
+$ fcm send --server-key $SERVER_KEY --to $TOKEN \
+           --notification.title hi \
+           --notification.body message
+
+# save configs in global named by 'pwa-app1' after sending message
+$ fcm send pwa-app1 --server-key $SERVER_KEY --to $TOKEN \
+                    --notification.title hi \
+                    --notification.body message
+
+# loading configs by 'pwa-app1 and then sending message
+$ fcm send pwa-app1 --notification.title hi --notification.body message
+
+# loading configs by 'pwa-app1' and sending message to multiple peers
+$ fcm send pwa-app1 --to $PEER1_TOKEN --to $PEER2_TOKEN \
+                    --notification.title hi \
+                    --notification.body message
+
+# loading configs from firebaseConfig properties at firebase.json
+$ fcm send firebase.json firebaseConfig \
+                    --notification.title hi \
+                    --notification.body message
+
+# loading configs from .env file and strip out FIREBASE_ prefix in keys
+$ fcm send .env FIREBASE_ --notification.title hi --notification.body message
+
+# watch Firebase database and sending push when it's changed
+fcm watch test1 --credential $PRJECT/conf/credential.json \
+                --database-url https://yourapp-id.firebaseio.com/
+```
+
+## What is benefits in terms of testing with FCM
 
 It's working in a similar way of other tools, are supporting RESTful APIs of Firebase, are working on terminal, like curl. However, those of another tools and commands is so hard and not handy to use while test as **we frequently modify configurations on terminal**. This package supports saving and loading pre-configuration by alias, loading from json with specific property and also .env which have simple key and value format. So, **we don't need to pass all of configuration everytime**. We can just put in simple updatable messages with alias
 
@@ -38,7 +78,9 @@ It's working in a similar way of other tools, are supporting RESTful APIs of Fir
 
 ```sh
 # first time, sending FCM push message with all of configs and alias for saving
-$ fcm send test1 --server-key $SERVER_KEY --to $TOKEN --notification.title hi --notification.body message
+$ fcm send test1 --server-key $SERVER_KEY --to $TOKEN \
+                 --notification.title hi \
+                 --notification.body message
 
 # second time, we don't need to pass keys configuration its already saved before named by test1
 $ fcm send test1 --notification.title hi --notification.body message2
@@ -63,44 +105,20 @@ $ fcm send firebase.json firebaseConfig --notification.title hi --notification.b
 #### Testing with watch mode
 
 ```sh
-fcm watch test1 --credential $PRJECT/conf/credential.json --database-url https://react-pwa-hello-world.firebaseio.com/ --api-key BfdmWiLAgIPCN-LADPTQtqD54TWdMzmZk
-```
-
-## Samples
-
-```sh
-# sending FCM push message by passed configs
-$ fcm send --server-key $SERVER_KEY --to $TOKEN --notification.title hi --notification.body message
-
-# save configs in global named by 'pwa-app1' after sending message
-$ fcm send pwa-app1 --server-key $SERVER_KEY --to $TOKEN --notification.title hi --notification.body message
-
-# loading configs by 'pwa-app1 and then sending message
-$ fcm send pwa-app1 --notification.title hi --notification.body message
-
-# loading configs by 'pwa-app1' and sending message to multiple peers
-$ fcm send pwa-app1 --to $PEER1_TOKEN --to $PEER2_TOKEN --notification.title hi --notification.body message
-
-# loading configs from firebaseConfig properties at firebase.json
-$ fcm send firebase.json firebaseConfig --notification.title hi --notification.body message
-
-# loading configs from .env file and strip out FIREBASE_ prefix in keys
-$ fcm send .env FIREBASE_ --notification.title hi --notification.body message
-
-# watch Firebase database and sending push when it's changed
-fcm watch test1 --credential $PRJECT/conf/credential.json --database-url https://yourapp-id.firebaseio.com/ --api-key BfdmWiLAgIPCN-LADPTQtqD54TWdMzmZk
+fcm watch test1 --credential $PRJECT/conf/credential.json \
+                --database-url https://react-pwa-hello-world.firebaseio.com/
 ```
 
 ## FAQ
 
-- Where is the location for saving alias and configurations: We use [configstore](https://www.npmjs.com/package/configstore) to write configs. It usally use for that location at `cat ~/.config/configstore/`  with package name `fcm-cli`. You can watch out waht is saved.
+- Where is the location for saving alias and configurations?: We use [configstore](https://www.npmjs.com/package/configstore) to save configs. It usally use for that location at `~/.config/configstore/`, with package name, `fcm-cli`. You can have a look what is saved.
 
 ```sh
 cat ~/.config/configstore/fcm-cli.json
 {
 	"test1": {
-		"serverKey": "APA91bGxdGjQOTb679rVrFpKcIw_9njHRdlIKaLdiGcVqSQdvBwhwYM-gV1Qcn-VvfIVMAFWuzqi7l5kdLFSC0cKPyZJdkBXiOSoJtr24zlCMHSbW9voAGixln0IyfyABRr2M5uYzaEV",
-		"to": "APA91bFeIEWraX_pYc2qnofDJJcbK1ajMDCLfYiavPt1gYfMacSu3LspJLKPL4X_4W-36HfXsXWNO862308Fg86itQ7UxkcLralW4iK8eBYdveSPxxWWjHAHb5J4Rm69xZRSjxhoDfYZ",
+		"serverKey": "SERVER-KEY",
+		"to": "LAST-SENT-TO-TOKEN",
 		"notification": {
 			"title": "hi",
 			"body": "Welcome Push World"
